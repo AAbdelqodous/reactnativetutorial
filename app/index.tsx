@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Text, Image, View, ScrollView, Button, Pressable, Modal } from "react-native";
+import { Text, Image, View, ScrollView, Button, Pressable, Modal, StatusBar, ActivityIndicator, Alert } from "react-native";
 
 export default function Index() {
 
   const [isOpen, setIsOpen] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <ScrollView
-      style={{ flex: 1}}
+      style={{ flex: 1 }}
       contentContainerStyle={{
         flexGrow: 1,
         justifyContent: "center",
@@ -18,22 +19,22 @@ export default function Index() {
       <Text>Welcome to React</Text>
 
       <Image
-        source={ require ("@/assets/images/react-logo.png" )}
+        source={require("@/assets/images/react-logo.png")}
         style={{ width: 600, height: 600 }}
       />
 
       <Text>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod esse officia aut, velit delectus, temporibus voluptate debitis perspiciatis ratione et blanditiis itaque provident possimus pariatur at quam deserunt dignissimos accusamus.</Text>
-    
-    <Button title="Press me" onPress={() => console.log('Clicked')}></Button>
 
-    <Pressable
-      onPress={() => console.log('onPress')}
-      onPressIn={() => console.log('onPressIn')}
-      onPressOut={() => console.log('onPressOut')}
-      onLongPress={() => console.log('onLongPress')}
-    >
-      <Text>Press text</Text>
-    </Pressable>
+      <Button title="Press me" onPress={() => console.log('Clicked')}></Button>
+
+      <Pressable
+        onPress={() => console.log('onPress')}
+        onPressIn={() => console.log('onPressIn')}
+        onPressOut={() => console.log('onPressOut')}
+        onLongPress={() => console.log('onLongPress')}
+      >
+        <Text>Press text</Text>
+      </Pressable>
 
       <Modal visible={isOpen} animationType="fade">
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -42,6 +43,28 @@ export default function Index() {
         </View>
       </Modal>
 
+      <StatusBar backgroundColor="red" barStyle="dark-content" />
+
+      <Button title="Toggle Loading" onPress={() => setIsLoading(!isLoading)}></Button>
+      <ActivityIndicator
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+
+        color="blue"
+        animating={isLoading}
+      >
+      </ActivityIndicator>
+
+      <Button title="Delete Account"
+        onPress={() => Alert.alert("Delete Account", "Are you sure you want to delete your account?",
+                                  [
+                                    { text: "Cancel" }, 
+                                    { text: "Delete", onPress: () => Alert.alert("Account deleted") }
+                                  ])}>
+      </Button>
     </ScrollView>
   );
 }
